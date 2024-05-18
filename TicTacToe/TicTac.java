@@ -14,10 +14,10 @@ public class TicTac {
         // Open a scanner for user input
         Scanner kb = new Scanner(System.in);
 
-        // Prints the board layout
+        // Prints the initial board
         printBoardLayout();
 
-        // Makes players wait for no reason
+        // Makes a fake waiter
         fakeWaitTimer();
         
         // Displays the board
@@ -53,6 +53,8 @@ public class TicTac {
             // checks for winner and breaks out when there is one
             if (checkWinner(currentPlayer)) {
                 winner = true;
+                SaveGame save = new SaveGame(board, currentPlayer);
+                save.saveState();
                 break;
             };
         }
@@ -123,11 +125,11 @@ public class TicTac {
                 break;
         }
         if (row == -1 && col == -1) {
-            System.out.println("You did not enter a valid location");
+            System.out.println(ConsoleUtilsColor.colorChange("red", "You did not enter a valid location"));
             placeMarker(kb, currentPlayer);
         }
         else if (board[row][col] != 0) {
-            System.out.println("You can not place at that postion. The spot is taken already. Try again");
+            System.out.println(ConsoleUtilsColor.colorChange("red", "You can not place at that postion. The spot is taken already. Try again"));
             placeMarker(kb, currentPlayer);
         }
         else {
@@ -141,7 +143,7 @@ public class TicTac {
      */
     private static void printBoardLayout(){
         System.out.println("\nHere are the placement symbols\nType one as input for example, when it asks for a locaton just type lm or mr etc. Good Luck! \n\n  Layout:");
-        System.out.println("\t tl | tm | tr \n\t -------------- \n\t ml | mm | mr  (Choose one spot w/ these markers) \n\t -------------- \n\t bl | bm | br ");
+        System.out.println(ConsoleUtilsColor.colorChange("yellow", "\t tl | tm | tr \n\t -------------- \n\t ml | mm | mr  (Choose one spot w/ these markers) \n\t -------------- \n\t bl | bm | br "));
     }
 
     /*
@@ -193,7 +195,6 @@ public class TicTac {
             counter = 0;
         }
 
-        // Checks Diagonals TL -> BR & TR -> BL
         if (board[0][0] == player && board[1][1] == player && board[2][2] == player) {
             return true;
         }
@@ -223,7 +224,7 @@ public class TicTac {
      */
     private static void announceWinner(boolean winner, int currentPlayer){
         if (winner) {
-            System.out.println("Congratulation, Player " + currentPlayer + " you won!");
+            System.out.println(ConsoleUtilsColor.colorChange("yellow", "Congratulation, Player " + currentPlayer + " you won!"));
         } else {
             System.out.println("OOPS, no one won, welp");
         }
@@ -237,9 +238,9 @@ public class TicTac {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 if (board[i][j] == 2) {
-                    System.out.print(" X ");
+                    System.out.print(ConsoleUtilsColor.colorChange("cyan", " X "));
                 } else if (board[i][j] == 1) {
-                    System.out.print(" O ");
+                    System.out.print(ConsoleUtilsColor.colorChange("green", " O "));
                 } else {
                     System.out.print(" - ");
                 }
