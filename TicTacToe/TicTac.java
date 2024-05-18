@@ -17,7 +17,7 @@ public class TicTac {
         // Prints the board layout
         printBoardLayout();
 
-        // Makes a fake waiter
+        // Makes players wait for no reason
         fakeWaitTimer();
         
         // Displays the board
