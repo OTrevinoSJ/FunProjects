@@ -25,8 +25,10 @@ public class HangManGame {
         // Print first board (first)
         initialShow(dashes);
 
+        //&& !isWordCompleted(dashes)
+        while (!isWordCompleted(dashes)) {
 
-        while (guesses < ATTEMPTS && !isWordCompleted(dashes)) {
+            if (guesses >= ATTEMPTS - 1) break;
 
             // Prints the board to the player
             printBoard(guesses);
@@ -38,9 +40,10 @@ public class HangManGame {
             printWrongs(wrongGuesses);
             
             // Get user input and also validates the input given to keep in range of the program
-            System.out.print("Enter a letter: ");
+            System.out.print("\nEnter a letter: ");
             String letter = kb.nextLine();
             letter = validateLatter(letter, kb);
+            System.out.println();
             
             // Update the array with a letter
             boolean updated = updateArray(dashes, letter);
@@ -49,9 +52,12 @@ public class HangManGame {
             System.out.print(ConsoleUtilsColor.colorChange("green", "(Word): "));
             printArray(dashes);
 
-            // Tells the player if guess was right or wrong
-            tellPlayer(updated, wrongGuesses, letter, guesses);
+            // // Tells the player if guess was right or wrong
+            guesses = tellPlayer(updated, wrongGuesses, letter, guesses);
         }
+
+        if (guesses == ATTEMPTS - 1) printBoard(guesses);
+        else System.out.println(ConsoleUtilsColor.colorChange("green", "Well Done!"));
 
         // ask player for input
 
@@ -96,7 +102,7 @@ public class HangManGame {
     /*
      * This method tells the player that the guess was right or wrong
      */
-    private static void tellPlayer(boolean updated, ArrayList<String> wrongGuesses, String letter, int guesses){
+    private static int tellPlayer(boolean updated, ArrayList<String> wrongGuesses, String letter, int guesses){
         if (updated) {
             System.out.println(ConsoleUtilsColor.colorChange("green", "----Correct!----"));
         }
@@ -110,6 +116,7 @@ public class HangManGame {
             }
             
         }
+        return guesses;
     }
 
     /*
@@ -161,7 +168,7 @@ public class HangManGame {
      * This method is for the initial screening of the game
      */
     private static void initialShow(char[] dashes){
-        System.out.print(ConsoleUtilsColor.colorChange("green", "(Word): "));
+        System.out.print("\n" + ConsoleUtilsColor.colorChange("green", "(Word): "));
         printArray(dashes);
         System.out.println(ConsoleUtilsColor.colorChange("yellow", "(" + word.length() + " letters)"));
     }
