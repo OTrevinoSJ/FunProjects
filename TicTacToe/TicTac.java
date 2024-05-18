@@ -193,6 +193,7 @@ public class TicTac {
             counter = 0;
         }
 
+        // Checks Diagnols TL -> BR & TR -> BL
         if (board[0][0] == player && board[1][1] == player && board[2][2] == player) {
             return true;
         }
