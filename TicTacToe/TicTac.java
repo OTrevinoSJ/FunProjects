@@ -11,23 +11,28 @@ public class TicTac {
 
     public static void main(String[] args) throws InterruptedException{
 
-        
+        // Open a scanner for user input
         Scanner kb = new Scanner(System.in);
 
         // Prints the initial board
         printBoardLayout();
 
-        System.out.println("Game will start in 3 seconds...");
-        Thread.sleep(3*1000);
-        System.out.println("Go!\n");
-
+        // Makes a fake waiter
+        fakeWaitTimer();
+        
         // Displays the board
         displayBoard();
 
+        // [Control logic]
+
+        // This helps switch between player one and player two
         boolean toggle = true;
-        boolean winner = false;
         int currentPlayer = -1;
 
+        // This holds the winner flag
+        boolean winner = false;
+
+        // A loop that continues until board is full
         while (!isBoardFull()) {
             // toggle between players
             if (toggle) {
@@ -45,22 +50,22 @@ public class TicTac {
             // displays board
             displayBoard();
 
-            // checks for winner
+            // checks for winner and breaks out when there is one
             if (checkWinner(currentPlayer)) {
                 winner = true;
                 break;
             };
         }
 
-        if (winner) {
-            System.out.println("Congratulation, Player " + currentPlayer + " you won!");
-        } else {
-            System.out.println("OOPS, no one won, welp");
-        }
+        // Announces the winner if there is one
+        announceWinner(winner, currentPlayer);
         
         
     }
 
+    /*
+     * This method is in charge of place a marker on the board
+     */
     private static void placeMarker(Scanner kb, int currentPlayer){
 
         // if place of placement is 0 then place; else ask again
@@ -131,14 +136,26 @@ public class TicTac {
 
     }
 
+    /*
+     * This method prints the board layout
+     */
     private static void printBoardLayout(){
         System.out.println("\nHere are the placement symbols\nType one as input for example, when it asks for a locaton just type lm or mr etc. Good Luck! \n\n  Layout:");
         System.out.println("\t tl | tm | tr \n\t -------------- \n\t ml | mm | mr  (Choose one spot w/ these markers) \n\t -------------- \n\t bl | bm | br ");
     }
 
+    /*
+     * This method is for aesthetic purposes only. This method has no real effect on the game as a whole.
+     */
+    private static void fakeWaitTimer() {
+        System.out.println("Game will start in 3 seconds...");
+        try {
+            Thread.sleep(3*1000);
+        } catch (Exception e) {
+        }
+        System.out.println("Go!\n");
 
-
-    
+    }
     
     /*
      * This method checks for the winner
@@ -198,6 +215,17 @@ public class TicTac {
             }
         }
         return count == 9 ? true : false;
+    }
+
+    /*
+     * This method announces the winner of the game at the end of the game
+     */
+    private static void announceWinner(boolean winner, int currentPlayer){
+        if (winner) {
+            System.out.println("Congratulation, Player " + currentPlayer + " you won!");
+        } else {
+            System.out.println("OOPS, no one won, welp");
+        }
     }
 
     /*
