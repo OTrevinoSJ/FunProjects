@@ -14,7 +14,7 @@ public class TicTac {
         // Open a scanner for user input
         Scanner kb = new Scanner(System.in);
 
-        // Prints the initial board
+        // Prints the board layout
         printBoardLayout();
 
         // Makes a fake waiter
