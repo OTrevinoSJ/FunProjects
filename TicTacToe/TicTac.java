@@ -9,7 +9,7 @@ public class TicTac {
         {0,0,0}
     };
 
-    public static void main(String[] args) throws InterruptedException{
+    public static void main(String[] args) {
 
         // Open a scanner for user input
         Scanner kb = new Scanner(System.in);
